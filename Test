@@ -61,10 +61,10 @@ MainSection:NewButton("Fog Remove", "Remove's fog", function()
 end)
 
 -- Boss Section
-local AutoKillBoss = Window:NewTab("BossKill")
-local BossSection = AutoKillBoss:NewSection("BossInstantKill")
+local AutoKillBoss = Window:NewTab("Boss Options")
+local BossSection = AutoKillBoss:NewSection("Boss Options")
 
-BossSection:NewToggle("AutoFarm Phantom", "Auto Farms PhantomKnight(Mysterious Key NEEDED, ALSO MAKE SURE YOUR STANDING NEXT TO THE BOSS DOOR BEFORE YOU TURN IT ON !!YOU WILL GET KICKED!!)", function(state)
+BossSection:NewToggle("AutoFarm LostBoss", "Auto Farms PhantomKnight(Hidden Key NEEDED, ALSO MAKE SURE YOUR STANDING NEXT TO THE BOSS DOOR BEFORE YOU TURN IT ON !!YOU WILL GET KICKED!!)", function(state)
 	if state then
 		_G.loopPhantom = true
 	else
@@ -72,6 +72,65 @@ BossSection:NewToggle("AutoFarm Phantom", "Auto Farms PhantomKnight(Mysterious K
 	end
 end)
 
+BossSection:NewButton("Collect-Chest", "Collects all chest until invitory full", function()
+	wait(0.5)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(0.1)
+	workspace.GuttermouthChest.InteractEvent:Fire()
+	wait(1)
+end)
+
+BossSection:NewButton("Kill Lost Boss", "Kills THELOST Boss", function()
+	killLost()
+end)
+
+--Teleports
+local Teleports = Window:NewTab("Teleport's")
+local TpList = Teleports:NewSection("Teleports")
+
+TpList:NewButton("Teleport Home", "Kills you but tp's you home", function()
+	Teleport(CFrame.new(681.72, 212.304, -379.528))
+end)
+
+TpList:NewButton("Teleport Lost Door", "Kills you but tp's you to The lost Door", function()
+	Teleport(CFrame.new(5853.63, 155.42, 4893.29))
+end)
 
 
 --Functions
@@ -91,6 +150,13 @@ function openChest()
 		workspace.Guttermouth["Door_GuttermouthPhantom (Hidden Key)"].InteractEvent:FireServer(true)
 	end
 	--workspace.Guttermouth.GuttermouthRoom4.ClaimRewards:InvokeServer()
+end
+
+function Teleport(CFrame) -- Takes CFrame argument
+	Player.Character.Humanoid.Health = 0
+	Player.CharacterAdded:Wait()
+	Player.Character:WaitForChild("HumanoidRootPart")
+	Player.Character.HumanoidRootPart.CFrame = CFrame
 end
 
 while wait(1) do
@@ -118,3 +184,4 @@ while wait(1) do
 		wait(2)
 	end
 end
+
