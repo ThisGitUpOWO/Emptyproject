@@ -1,0 +1,120 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("Fantastic Gui - By KOLD", "Ocean")
+
+--Local's
+local Player = game:GetService'Players'.LocalPlayer;
+local UIS = game:GetService'UserInputService';
+local char = game.Players.LocalPlayer.Character
+local fb = char.Fogbox
+local pc = Player.Character
+local Platform = false
+
+-- MAIN
+local Main = Window:NewTab("Main")
+local MainSection = Main:NewSection("PlayerActions")
+
+
+MainSection:NewButton("Speed(Default x)", "Speed Hack Bypass (Hotkey X)", function()
+	UIS.InputBegan:connect(function(UserInput)
+		if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.X then
+			_G.Running = true
+			while wait(0.005) and _G.Running == true do
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1
+				game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 1
+			end
+		end
+	end)
+	UIS.InputEnded:connect(function(UserInput)
+		if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.X then
+			_G.Running = false
+		end
+	end)
+end)
+
+MainSection:NewToggle("PlatForm", "Puts invisable platform under you(Breaks after you reset)", function(state)
+	if state then
+		Platform = true
+		local pf = Instance.new('Part', pc)
+		pf.Name = 'pf'
+		pf.Transparency = 1
+		pf.Size = Vector3.new(6,1,6)
+		pf.Anchored = true
+		pf.CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
+		while wait(0.1) do
+			if pc:FindFirstChild("pf") then
+				pf.CFrame = pc.HumanoidRootPart.CFrame * CFrame.new(0,-3.5,0)
+			end
+		end
+	else
+		Platform = false
+		if pc:FindFirstChild("pf") then
+			pc.pf:Destroy()
+		end
+	end
+end)
+
+MainSection:NewButton("Fog Remove", "Remove's fog", function()
+	fb.Ring1.Mesh:remove()
+	fb.Ring2.Mesh:remove()
+	fb.Ring3.Mesh:remove()
+end)
+
+-- Boss Section
+local AutoKillBoss = Window:NewTab("BossKill")
+local BossSection = AutoKillBoss:NewSection("BossInstantKill")
+
+BossSection:NewToggle("AutoFarm Phantom", "Auto Farms PhantomKnight(Mysterious Key NEEDED, ALSO MAKE SURE YOUR STANDING NEXT TO THE BOSS DOOR BEFORE YOU TURN IT ON !!YOU WILL GET KICKED!!)", function(state)
+	if state then
+		_G.loopPhantom = true
+	else
+		_G.loopPhantom = false
+	end
+end)
+
+
+
+--Functions
+function killLost()
+	for i,v in pairs(workspace.Guttermouth.GuttermouthRoom4.Monsters:GetChildren()) do
+		if(v.Name=='PhantomKnightNPC' or v.Name == 'Phantom') and v:FindFirstChild'Humanoid' then
+			v.Humanoid.Health = 0
+		end
+	end
+end
+
+function openChest()
+	if workspace:FindFirstChild("GuttermouthChest") then
+		workspace.GuttermouthChest.InteractEvent:Fire()
+	else
+		workspace.Guttermouth.GuttermouthRoom4.GutterExit.InteractEvent:FireServer(true)
+		workspace.Guttermouth["Door_GuttermouthPhantom (Hidden Key)"].InteractEvent:FireServer(true)
+	end
+	--workspace.Guttermouth.GuttermouthRoom4.ClaimRewards:InvokeServer()
+end
+
+while wait(1) do
+	if _G.loopPhantom == true then
+		wait(1)
+		workspace.Guttermouth:FindFirstChild("Door_GuttermouthPhantom (Hidden Key)").InteractEvent:FireServer()
+		wait(2.5)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12658.3, 253.001, -2354.36)
+		killLost()
+		wait(1)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12626, 253.014, -2352.05)
+		wait(1)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12594.3, 252.973, -2354.77)
+		wait(1)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12562.1, 253.029, -2354.02)
+		wait(1)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12543.2, 253, -2358.81)
+		wait(7)
+		workspace.GuttermouthChest.InteractEvent:Fire()
+		wait(2)
+		game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(12528.3, 252.993, -2350.65)
+		wait(0.5)
+		workspace.Guttermouth.GuttermouthRoom4.GutterExit.InteractEvent:FireServer(true)
+		workspace.Guttermouth["Door_GuttermouthPhantom (Hidden Key)"].InteractEvent:FireServer(true)
+		wait(2)
+	end
+end
